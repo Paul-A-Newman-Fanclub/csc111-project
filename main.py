@@ -11,3 +11,4 @@ def bigquery_helper():
 
 if __name__ == "__main__":
     bigquery_helper()
+    
