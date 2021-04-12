@@ -20,13 +20,16 @@ def plot_graph(graph: nx.MultiDiGraph) -> None:
     """
     Plot the Multiple Directed graph using the plotly library.
     """
+    # Choosing the spring layout to position the vertices of the graph.
+    pos = nx.spring_layout(graph)
+
     # Creating the edge trace.
     edge_x = []
     edge_y = []
     for edge in graph.edges():
         # Determine the start and end coordinates of the edge on the graph.
-        x0, y0 = graph.nodes[edge[0]]['pos']
-        x1, y1 = graph.nodes[edge[1]]['pos']
+        x0, y0 = pos[edge[0]]
+        x1, y1 = pos[edge[1]]
 
         # Add all x coordinates to list of x_edge data.
         edge_x.append(x0)
@@ -47,15 +50,12 @@ def plot_graph(graph: nx.MultiDiGraph) -> None:
         mode='lines'
     )
 
-    # Choosing the spring layout to position the vertices of the graph.
-    positions = nx.spring_layout(graph)
-
     # Creating the node trace.
     node_x = []
     node_y = []
     for node in graph.nodes():
-        # No positions until you initialize them (use some nx layout for this).
-        x, y = positions[node]
+        # Determine the coordinates of each node (using the spring layout defined earlier)
+        x, y = pos[node]
         node_x.append(x)
         node_y.append(y)
 

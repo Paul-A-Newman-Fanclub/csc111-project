@@ -1,5 +1,16 @@
 """
-CSC111 Final Project: ...
+CSC111 Final Project: Reconstructing the Ethereum Network Using
+Graph Data Structures in Python
+
+General Information
+------------------------------------------------------------------------------
+This file was created for the purpose of applying concepts in learned in
+CSC111 to the real world problem domain of cryptocurrency transactions.
+
+Copyright Information
+------------------------------------------------------------------------------
+This file is Copyright of Tobey Brizuela, Daniel Lazaro, Matthew Parvaneh, and
+Michael Umeh.
 """
 from google.cloud import bigquery
 import os
