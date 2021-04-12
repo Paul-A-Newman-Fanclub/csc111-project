@@ -20,6 +20,7 @@ def bigquery_helper():
         'SELECT nonce, from_address, to_address, value, gas, gas_price, receipt_status, block_timestamp '
         'FROM `bigquery-public-data.crypto_ethereum.transactions` '
         'WHERE DATE_ADD(CURRENT_DATE(), INTERVAL -1 day) <= DATE(block_timestamp) '
+        'AND value > 0 '
         'ORDER BY block_timestamp DESC '
         'LIMIT 1000')
     query_job = client.query(QUERY)  # Make API request
@@ -48,12 +49,14 @@ def bigquery_helper():
             'SELECT from_address '
             'FROM `bigquery-public-data.crypto_ethereum.transactions` '
             'WHERE DATE_ADD(CURRENT_DATE(), INTERVAL -1 day) <= DATE(block_timestamp) '
+            'AND value > 0 '
             'ORDER BY block_timestamp DESC '
             'LIMIT 1000 '
         ') OR address IN ( '
             'SELECT to_address '
             'FROM `bigquery-public-data.crypto_ethereum.transactions` '
             'WHERE DATE_ADD(CURRENT_DATE(), INTERVAL -1 day) <= DATE(block_timestamp) '
+            'AND value > 0 '
             'ORDER BY block_timestamp DESC '
             'LIMIT 1000 '
         ')')
