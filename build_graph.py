@@ -37,7 +37,7 @@ def build_graph(accounts_file: str, transactions_file: str) -> nx.MultiDiGraph:
 
     # Begin adding all nodes (account/balance pairings as vertices to graph).
     # Each vertex will be initialize to hold the tuple (account address, Ether balance).
-    vertex_dict = {}
+    # vertex_dict = {}
     with open(accounts_file) as af:
         accounts = csv.reader(af)
 
@@ -49,8 +49,8 @@ def build_graph(accounts_file: str, transactions_file: str) -> nx.MultiDiGraph:
         # balance=ether_balance
         for account in accounts:
             # item = (account[1], account[0])
-            item = account[1]
-            value = int(account[0])
+            item = account[1]  # Corresponds to the account address
+            value = int(account[0])  # Corresponds to the account balance
 
             # Determine what the node size should be, based on the balance in the account
             # the more ether the bigger the node.
@@ -62,8 +62,8 @@ def build_graph(accounts_file: str, transactions_file: str) -> nx.MultiDiGraph:
 
             graph.add_node(item, balance=value, size=node_size)
 
-            # Add the pairing to the dict to keep track of it.
-            vertex_dict[account[1]] = account[0]
+            # Add the pairing to the dict to keep track of it. **NO LONGER NECESSARY**
+            # vertex_dict[account[1]] = account[0]
 
     # Add directed edges between nodes based on which addresses complete transactions
     # w/ one another. Edge will be directed going form vertex corresponding to
@@ -83,12 +83,15 @@ def build_graph(accounts_file: str, transactions_file: str) -> nx.MultiDiGraph:
             # Wei is a smaller denomination of Ether, 1 Ether = 10^18 Wei.
             value = float(value) / (10 ** 18)
 
-            # First check that both the to_ and from_ addresses are present in the
+            # First check that both the to_ and from_ addresses are present in the **NO LONGER NECESSARY**
             # graph before trying to add an edge b/w them. - since datasets might not
-            # be comprehensive or line up w/ each other.
-            if from_addr in vertex_dict and to_addr in vertex_dict:
-                # Add an edge between the two accounts based on the transaction.
-                graph.add_edge((from_addr, vertex_dict[from_addr]), (to_addr, vertex_dict[to_addr]), weight=value)
+            # # be comprehensive or line up w/ each other.
+            # if from_addr in vertex_dict and to_addr in vertex_dict:
+            #     # Add an edge between the two accounts based on the transaction.
+            #     graph.add_edge((from_addr, vertex_dict[from_addr]), (to_addr, vertex_dict[to_addr]), weight=value)
+
+            # Add an edge between the two accounts based on the transaction.
+            graph.add_edge(from_addr, to_addr, weight=value)
 
     return graph
 
