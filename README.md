@@ -4,6 +4,7 @@ CSC111 Final Project: Reconstructing the Ethereum Network Using Graph Data Struc
 ## Progress
 
 ### Report
+_Note: a lot of this stuff can be taken from the proposal, it just needs to be polished._
 - [X] outline
 - [ ] introduction
 - [ ] computational overview
