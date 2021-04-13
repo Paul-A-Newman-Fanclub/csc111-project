@@ -25,7 +25,10 @@ _Note: a lot of this stuff can be taken from the proposal, it just needs to be p
   - [X] writing to CSV
   - [ ] allowing user to specify params
 - [X] building the graph (we're done this, right?)
-- [ ] graph traversal algos
+- [ ] graph traversal algos (this probably won't involve much coding, networkx provides methods that help)
+  - [ ] are there any paths with length > 1? if so, what is the longest path?
+  - [ ] any cycles?
+- [ ] regression analysis?
 - [ ] visualization
   - [X] basic functionality
   - [ ] size of nodes depends on Ether balance
@@ -33,7 +36,7 @@ _Note: a lot of this stuff can be taken from the proposal, it just needs to be p
   - [ ] display balance/acct. number when hovering over node
   - [ ] display transaction value when hovering over edge
   - [ ] experiment with other layouts? (maybe let the user specify)
-- [ ] Dash app
+- [ ] Dash app (this has the lowest priority, we do this if we have time)
   - [ ] basic functionality
   - [ ] extra features (_e.g._ user can choose how nodes are clustered using a dropdown?)
   - [ ] prettifying
