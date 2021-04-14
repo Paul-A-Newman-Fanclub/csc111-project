@@ -36,8 +36,8 @@ _Note: a lot of this stuff can be taken from the proposal, it just needs to be p
 - [ ] regression analysis?
 - [ ] visualization
   - [X] basic functionality
-  - [ ] size of nodes depends on Ether balance
-  - [ ] colour of nodes depends on number of connections
+  - [X] size of nodes depends on Ether balance
+  - [X] colour of nodes depends on number of connections
   - [ ] display balance/acct. number when hovering over node
   - [ ] display transaction value when hovering over edge
   - [ ] experiment with other layouts? (maybe let the user specify)
