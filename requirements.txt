@@ -1,4 +1,4 @@
 ﻿# CSC111 Final Project Requirements
 
-google~=3.0.0
+google-cloud-bigquery~=3.0.0
 networkx~=2.5
