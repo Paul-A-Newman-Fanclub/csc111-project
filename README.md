@@ -21,6 +21,7 @@ _Note: a lot of this stuff can be taken from the proposal, it just needs to be p
 
 ### Code
 - [X] BigQuery/data fetching
+<!--
   - [X] basic functionality
   - [X] writing to CSV
   - [X] allowing user to specify params
@@ -29,6 +30,7 @@ _Note: a lot of this stuff can be taken from the proposal, it just needs to be p
     - [ ] ~~choose to have no sorting (this might result in a mess)~~
     - [X] change sorting order (default = dates DESC)
     - [X] unrelated: consider removing unnecessary columns from transactions.csv
+-->
 - [X] building the graph (we're done this, right?)
 - [ ] graph traversal algos ~~(this probably won't involve much coding, networkx provides methods that help)~~
   - [ ] are there any paths with length > 1? if so, what is the longest path?
