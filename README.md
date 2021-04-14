@@ -38,7 +38,7 @@ _Note: a lot of this stuff can be taken from the proposal, it just needs to be p
   - [X] basic functionality
   - [X] size of nodes depends on Ether balance
   - [X] colour of nodes depends on number of connections
-  - [ ] display balance/acct. number when hovering over node
+  - [X] display balance/acct. number when hovering over node
   - [ ] display transaction value when hovering over edge
   - [ ] experiment with other layouts? (maybe let the user specify)
 - [ ] Dash app (this has the lowest priority, we do this if we have time)
