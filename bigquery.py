@@ -1,5 +1,16 @@
 """
-CSC111 Final Project: ...
+CSC111 Final Project: Reconstructing the Ethereum Network Using
+Graph Data Structures in Python
+
+General Information
+------------------------------------------------------------------------------
+This file was created for the purpose of applying concepts in learned in
+CSC111 to the real world problem domain of cryptocurrency transactions.
+
+Copyright Information
+------------------------------------------------------------------------------
+This file is Copyright of Tobey Brizuela, Daniel Lazaro, Matthew Parvaneh, and
+Michael Umeh.
 """
 from google.cloud import bigquery
 import os
@@ -20,6 +31,7 @@ def bigquery_helper():
         'SELECT nonce, from_address, to_address, value, gas, gas_price, receipt_status, block_timestamp '
         'FROM `bigquery-public-data.crypto_ethereum.transactions` '
         'WHERE DATE_ADD(CURRENT_DATE(), INTERVAL -1 day) <= DATE(block_timestamp) '
+        'AND value > 0 '
         'ORDER BY block_timestamp DESC '
         'LIMIT 1000')
     query_job = client.query(QUERY)  # Make API request
@@ -48,12 +60,14 @@ def bigquery_helper():
             'SELECT from_address '
             'FROM `bigquery-public-data.crypto_ethereum.transactions` '
             'WHERE DATE_ADD(CURRENT_DATE(), INTERVAL -1 day) <= DATE(block_timestamp) '
+            'AND value > 0 '
             'ORDER BY block_timestamp DESC '
             'LIMIT 1000 '
         ') OR address IN ( '
             'SELECT to_address '
             'FROM `bigquery-public-data.crypto_ethereum.transactions` '
             'WHERE DATE_ADD(CURRENT_DATE(), INTERVAL -1 day) <= DATE(block_timestamp) '
+            'AND value > 0 '
             'ORDER BY block_timestamp DESC '
             'LIMIT 1000 '
         ')')
