@@ -35,7 +35,7 @@ _Note: a lot of this stuff can be taken from the proposal, it just needs to be p
 - [ ] graph traversal algos ~~(this probably won't involve much coding, networkx provides methods that help)~~
   - [ ] are there any paths with length > 1? if so, what is the longest path?
   - [X] any cycles?
-- [ ] regression analysis?
+- [X] regression analysis?
 - [ ] visualization
   - [X] basic functionality
   - [X] size of nodes depends on Ether balance
