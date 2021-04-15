@@ -1,12 +1,10 @@
 """
 CSC111 Final Project: Reconstructing the Ethereum Network Using
 Graph Data Structures in Python
-
 General Information
 ------------------------------------------------------------------------------
 This file was created for the purpose of applying concepts in learned in
 CSC111 to the real world problem domain of cryptocurrency transactions.
-
 Copyright Information
 ------------------------------------------------------------------------------
 This file is Copyright of Tobey Brizuela, Daniel Lazaro, Matthew Parvaneh, and
@@ -14,6 +12,8 @@ Michael Umeh.
 """
 import plotly.graph_objects as go
 import networkx as nx
+
+from build_graph import build_graph
 
 
 def plot_graph(graph: nx.MultiDiGraph) -> None:
@@ -53,11 +53,18 @@ def plot_graph(graph: nx.MultiDiGraph) -> None:
     # Creating the node trace.
     node_x = []
     node_y = []
+    node_size = []
     for node in graph.nodes():
         # Determine the coordinates of each node (using the spring layout defined earlier)
         x, y = pos[node]
         node_x.append(x)
         node_y.append(y)
+
+        size = 10
+        if graph.nodes[node] != {}:
+            size = graph.nodes[node]['size']
+
+        node_size.append(size)
 
     node_trace = go.Scatter(
         x=node_x, y=node_y,
@@ -67,10 +74,10 @@ def plot_graph(graph: nx.MultiDiGraph) -> None:
             showscale=True,
             colorscale='Hot',
             color=[],
-            size=10,
+            size=node_size,
             colorbar=dict(
-                thickness=15,
-                title='Node Connections',
+                thickness=10,
+                title='# of Transactions (degree)',
                 xanchor='left',
                 titleside='right'
             ),
@@ -81,8 +88,32 @@ def plot_graph(graph: nx.MultiDiGraph) -> None:
     # Setting the text of each node to its address.
     node_text = []
     for node in graph.nodes():
-        node_text.append(node)
+        node_desc = f"Address: {node}"
+
+        # If the account doesn't have an empty representation
+        # in the graph, get its balance.
+        if graph.nodes[node] != {}:
+            balance = graph.nodes[node]['balance']
+            node_desc = f"Address: {node}\nBalance: {balance}"
+
+        # Add the description of the node to the list (which
+        # will get added to the trace, updating it).
+        node_text.append(node_desc)
+
+    # Update the text and size attributes of the node trace.
     node_trace.text = node_text
+
+    node_neighbours = []
+    for node in graph.adjacency():
+        # To find the neighbours of this node (accounts who either
+        # sent or received transactions from this current account)
+        # we must access the second item of a tuple, which contains
+        # a dictionary representation of its neighbours (addresses
+        # mapped to
+        neighbours = len(node[1])
+        node_neighbours.append(neighbours)
+
+    node_trace.marker.color = node_neighbours
 
     # Setting up the layout here.
     layout = go.Layout(
@@ -106,28 +137,3 @@ def plot_graph(graph: nx.MultiDiGraph) -> None:
     )
 
     fig.show()
-
-# Ignore this for now.
-# def create_edge(label, x, y) -> go.Scatter:
-#     """
-#     Create an edge for the graph.
-#     """
-#     edge = go.Scatter(
-#         x=x, y=y,
-#         line=dict(width=1, color='black'),
-#         hoverinfo='text',
-#         text=label,
-#         mode='lines'
-#     )
-#
-#     return edge
-
-
-# node_adjacencies = []
-# node_text = []
-# for node, adjacencies in enumerate(graph.adjacency()):
-#     node_adjacencies.append(len(adjacencies[1]))
-#     node_text.append('# of connections: ' + str(len(adjacencies[1])))
-#
-# node_trace.marker.color = node_adjacencies
-# node_trace.text = node_text
