@@ -3,10 +3,10 @@ Main file.
 """
 from build_graph import build_graph
 from visualize_graph import plot_graph
-from bigquery import bigquery_helper
+from bigquery import user_input_query_helper
 
-# Run a query on BigQuery, and write the results to csv files.
-bigquery_helper()
+# Prompt user for input, run a query on BigQuery, and write the results to csv files.
+user_input_query_helper()
 
 # Create a graph of the ethereum network using the csv files available.
 ethereum_graph = build_graph('balances.csv', 'transactions.csv')
