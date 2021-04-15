@@ -26,6 +26,10 @@ def plot_graph(graph: nx.MultiDiGraph) -> None:
     # Creating the edge trace.
     edge_x = []
     edge_y = []
+
+    xtext = []
+    ytext = []
+    edge_values_text = []
     for edge in graph.edges():
         # Determine the start and end coordinates of the edge on the graph.
         x0, y0 = pos[edge[0]]
@@ -41,13 +45,28 @@ def plot_graph(graph: nx.MultiDiGraph) -> None:
         edge_y.append(y1)
         edge_y.append(None)
 
+        # Add x midpoint coordinates to list of xtext data.
+        xtext.append((x0 + x1) / 2)
+
+        # Add y midpoint coordinates to list of ytext data.
+        ytext.append((y0 + y1) / 2)
+
+        # Add transaction value to list of edge_values data.
+        value = graph.get_edge_data(edge[0], edge[1])[0]['weight']
+        edge_values_text.append(f"Transaction Value: {value}")
+
     # Plotting the edges.
     edge_trace = go.Scatter(
         x=edge_x, y=edge_y,
         line=dict(width=1, color='black'),
-        hoverinfo='text',
-        text='Transaction',
         mode='lines'
+    )
+
+    # Plotting the edge transaction text.
+    edge_values_trace = go.Scatter(x=xtext, y=ytext, mode='none',
+                                   text=edge_values_text,
+                                   textposition='top center',
+                                   hovertemplate='%{text}<extra></extra>'
     )
 
     # Creating the node trace.
@@ -127,7 +146,7 @@ def plot_graph(graph: nx.MultiDiGraph) -> None:
 
     # Plot the graph figure.
     fig = go.Figure(
-        data=[edge_trace, node_trace],
+        data=[edge_trace, node_trace, edge_values_trace],
         layout=layout
     )
 
