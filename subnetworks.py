@@ -117,13 +117,18 @@ def future_partners(graph: nx.MultiDiGraph, subnetwork: list[str]) -> None:
     print(f"The account at center of the biggest subnetwork is: {main_account}\n")
     print("Below are the accounts in the subnetwork that are most likely to engage\n" +
           "in future transactions with the main account, ranked on how many of the\n" +
-          'same neighbours they have. (To be a future partner, they must have AT LEAST\n' +
-          "ONE common neighbour.\n")
+          "same neighbours they have. (To be a potential future partner, they must have\n" +
+          "AT LEAST ONE common neighbour.\n")
 
     for i in range(0, len(partners)):
         if partners[i][1] > 0:
             print(f"#{i + 1} - Account Address: {partners[i][0]}")
             print(f"Number of shared neighbours: {partners[i][1]}\n")
+
+    if all(partners[i][1] == 0 for i in range(0, len(partners))):
+        print("It looks like there were no accounts that shared neighbours with" +
+              "the main account in this subnetwork. We cannot tell who might be" +
+              "a future transactional partner with them.")
 
 
 if __name__ == '__main__':
