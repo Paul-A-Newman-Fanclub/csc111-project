@@ -6,12 +6,12 @@ CSC111 Final Project: Reconstructing the Ethereum Network Using Graph Data Struc
 ### Report
 _Note: a lot of this stuff can be taken from the proposal, it just needs to be polished. ([Link to proposal/report](https://www.overleaf.com/6829945714dwmwckxbbctz))_
 - [X] outline
-- [ ] introduction
+- [X] introduction
 - [ ] computational overview
   - [ ] data fetching
   - [ ] building the graph
   - [ ] answering the questions (graph traversal algos)
-  - [ ] visualization
+  - [X] visualization
 - [ ] instructions for TA
 - [ ] changes to original plan
 - [ ] discussion
@@ -32,8 +32,8 @@ _Note: a lot of this stuff can be taken from the proposal, it just needs to be p
     - [X] unrelated: consider removing unnecessary columns from transactions.csv
 -->
 - [X] building the graph (we're done this, right?)
-- [ ] graph traversal algos ~~(this probably won't involve much coding, networkx provides methods that help)~~
-  - [ ] are there any paths with length > 1? if so, what is the longest path?
+- [X] graph traversal algos ~~(this probably won't involve much coding, networkx provides methods that help)~~
+  - [X] are there any paths with length > 1? if so, what is the longest path?
   - [X] any cycles?
 - [X] regression analysis?
 - [ ] visualization
