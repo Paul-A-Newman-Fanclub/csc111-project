@@ -16,12 +16,13 @@ from google.cloud import bigquery
 import os
 import csv
 
-def user_input_query_helper():
+
+def user_input_query_helper(credentials: str) -> None:
     """
     Passes arguments to bigquery_helper according to user input.
     """
     # Default values (default strings used in the query)
-    filter_values = ''  # No filtering
+    filter_values = 'AND value > 0 '  # Filter out values of 0
     transaction_limit = 'LIMIT 1000 '  # Limit to 1000 transactions
     sorting = 'ORDER BY block_timestamp DESC '  # Sort by time descending
     range = '1'  # Transactions occuring during the last day
@@ -32,19 +33,19 @@ def user_input_query_helper():
         default = input('Would you like to customize your query? (Y/N, default N): ')
     if default.lower().strip() in {'n', 'no', ''}:
         print('\nQuerying using default parameters (see report for details).\n')
-        _bigquery_helper(filter_values, transaction_limit, sorting, range)
+        _bigquery_helper(credentials, filter_values, transaction_limit, sorting, range)
     else:
         # Filter out transactions with value 0?
         filter_values_input = input(
             'Would you like to filter out transactions with value 0? ' 
-            '(Y/N, default N): ')
+            '(Y/N, default Y): ')
         while filter_values_input.lower().strip() not in {'y', 'yes', 'n', 'no', ''}:
             print('Invalid input.')
             filter_values_input = input(
                 'Would you like to filter out transactions with value 0? ' 
-                '(Y/N, default N): ')
-        if filter_values_input.lower().strip() in {'y', 'yes'}:
-            filter_values = 'AND value > 0 '
+                '(Y/N, default Y): ')
+        if filter_values_input.lower().strip() in {'n', 'no'}:
+            filter_values = ''
 
         # Date range?
         # Note: higher values only make a difference when sorting by date ASC
@@ -88,17 +89,23 @@ def user_input_query_helper():
             transaction_limit = 'LIMIT ' + transaction_limit_input.strip() + ' '
 
         print('\nQuerying using user-specified parameters.\n')
-        _bigquery_helper(filter_values, transaction_limit, sorting, range)
+        _bigquery_helper(credentials, filter_values, transaction_limit, sorting, range)
         
 
-def _bigquery_helper(filter_values, transaction_limit, sorting, range):
+def _bigquery_helper(
+        credentials: str, 
+        filter_values: str, 
+        transaction_limit: str, 
+        sorting: str, 
+        range: str
+    ) -> None:
     """
     Queries the Ethereum BigQuery dataset according to user's input.
     """
     print('Fetching the Ethereum transaction/balance data from Google BigQuery.')
     print('This may take a while...\n')
-    # Initialize client (this will use the credentials in 'credentials.json' to authenticate)
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="credentials.json"
+    # Initialize client (this will use the specified credentials file to authenticate)
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = credentials
     client = bigquery.Client()
 
     # Perform the transactions query (query written in SQL)

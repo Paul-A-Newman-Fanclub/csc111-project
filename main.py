@@ -22,7 +22,9 @@ from visualize_graph import plot_graph
 
 
 # Prompt user for input, run a query on BigQuery, and write the results to csv files.
-user_input_query_helper()
+# If the query fails due to exceeding the quota, replace 
+# 'credentials.json' with 'backup-credentials.json'
+# user_input_query_helper('credentials.json')
 
 # Create a graph of the ethereum network using the csv files available.
 ethereum_graph = build_graph('balances.csv', 'transactions.csv')

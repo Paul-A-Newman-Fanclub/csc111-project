@@ -1,10 +1,12 @@
 """
 CSC111 Final Project: Reconstructing the Ethereum Network Using
 Graph Data Structures in Python
+
 General Information
 ------------------------------------------------------------------------------
 This file was created for the purpose of applying concepts in learned in
 CSC111 to the real world problem domain of cryptocurrency transactions.
+
 Copyright Information
 ------------------------------------------------------------------------------
 This file is Copyright of Tobey Brizuela, Daniel Lazaro, Matthew Parvaneh, and
@@ -74,7 +76,7 @@ def balance_correlation_and_plot(graph: nx.MultiDiGraph) -> tuple:
                      title="Degree vs. Balance Scatter Plot",
                      labels={"Balance", "Degree"})
     fig.show()
-    return (r2, rmse)
+    return (abs(r2), rmse)
 
 
 if __name__ == '__main__':
