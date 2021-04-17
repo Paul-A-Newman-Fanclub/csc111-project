@@ -9,10 +9,10 @@ _Note: a lot of this stuff can be taken from the proposal, it just needs to be p
 - [X] introduction
 - [ ] computational overview
   - [ ] data fetching
-  - [ ] building the graph
-  - [ ] answering the questions (graph traversal algos)
+  - [X] building the graph
+  - [X] answering the questions (graph traversal algos)
   - [X] visualization
-- [ ] instructions for TA
+- [X] instructions for TA
 - [ ] changes to original plan
 - [ ] discussion
   - [ ] interpreting results
@@ -36,14 +36,9 @@ _Note: a lot of this stuff can be taken from the proposal, it just needs to be p
   - [X] are there any paths with length > 1? if so, what is the longest path?
   - [X] any cycles?
 - [X] regression analysis?
-- [ ] visualization
+- [X] visualization
   - [X] basic functionality
   - [X] size of nodes depends on Ether balance
   - [X] colour of nodes depends on number of connections
   - [X] display balance/acct. number when hovering over node
   - [X] display transaction value when hovering over edge
-  - [ ] experiment with other layouts? (maybe let the user specify)
-- [ ] Dash app (this has the lowest priority, we do this if we have time)
-  - [ ] basic functionality
-  - [ ] extra features (_e.g._ user can choose how nodes are clustered using a dropdown?)
-  - [ ] prettifying
