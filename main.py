@@ -31,7 +31,8 @@ ethereum_graph = build_graph('balances.csv', 'transactions.csv')
 plot_graph(ethereum_graph)
 
 # Run the linear regression and output the result.
-balance_correlation_and_plot(ethereum_graph)
+r2, rmse = balance_correlation_and_plot(ethereum_graph)
+print("Coefficient of determination (r^2): " + str(r2) + "\nRMSE: " + str(rmse) + "\n")
 
 # Prompt the user if they are ready to run high_balance, run it if they are.
 print("Enter 'y' when you wish to run the high_balance.py.")
