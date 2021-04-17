@@ -56,10 +56,10 @@ def high_balance_transactions(graph: nx.MultiDiGraph, avg_balance: float) -> flo
         - avg_balance >= 0
     """
     # First, find all high balance accounts in the overall graph.
-    all_accounts = list(graph.nodes())
+    all_accounts = list(graph.nodes)
     accounts = find_high_balance_accounts(graph, all_accounts, avg_balance)
 
-    # Accumulator to hold each proportion across all high balance accounds.
+    # Accumulator to hold each proportion across all high balance accounts.
     all_props = []
     for account in accounts:
         # First, find ALL successors and predecessors.
@@ -74,13 +74,20 @@ def high_balance_transactions(graph: nx.MultiDiGraph, avg_balance: float) -> flo
                                                            avg_balance))
 
         # Calculate the proportion of high balance transactions for the
-        # current account.
-        proportion = (high_successors + high_predecessors) / \
-                     (len(successors) + len(predecessors))
+        # current account (all of its high balance neighbours divided by
+        # all of its neighbours in general).
+        total_neighbours = len(successors) + len(predecessors)
 
-        all_props.append(proportion)
+        if total_neighbours != 0:
+            proportion = (high_successors + high_predecessors) / total_neighbours
+            all_props.append(proportion)
 
-    return sum(all_props) / len(all_props)
+    if len(all_props) != 0:
+        return sum(all_props) / len(all_props)
+
+    # If we reach this point in the code, then there must not
+    # have been any valid proportions.
+    return 0.0
 
 
 def find_high_balance_accounts(graph: nx.MultiDiGraph, accounts: list[str],
