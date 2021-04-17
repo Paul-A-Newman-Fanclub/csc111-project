@@ -11,26 +11,30 @@ This file is Copyright of Tobey Brizuela, Daniel Lazaro, Matthew Parvaneh, and
 Michael Umeh.
 """
 import csv
-import networkx as nx
 import math
+import networkx as nx
 
 
 def build_graph(accounts_file: str, transactions_file: str) -> nx.MultiDiGraph:
     """
     Build up and return a networkx Graph object from data provided in
     .csv file format.
+
     Specifically:
     Initialize the vertices of the graph to hold the address of the ethereum external
     accounts and their respective balances.
     Then, add edges between all accounts based on transactions that have occurred (must be
     a directed graph).
+
+    Preconditions:
+        - accounts_file != ''
+        - transactions_file != ''
     """
     # Initialize an empty networkx graph.
     graph = nx.MultiDiGraph()
 
     # Begin adding all nodes (account/balance pairings as vertices to graph).
     # Each vertex will be initialize to hold the tuple (account address, Ether balance).
-    # vertex_dict = {}
     with open(accounts_file) as af:
         accounts = csv.reader(af)
 
@@ -58,9 +62,6 @@ def build_graph(accounts_file: str, transactions_file: str) -> nx.MultiDiGraph:
 
             graph.add_node(item, balance=ether, size=node_size)
 
-            # Add the pairing to the dict to keep track of it. **NO LONGER NECESSARY**
-            # vertex_dict[account[1]] = account[0]
-
     # Add directed edges between nodes based on which addresses complete transactions
     # w/ one another. Edge will be directed going form vertex corresponding to
     # from_address to vertex corresponding to to_address in transaction record.
@@ -79,13 +80,6 @@ def build_graph(accounts_file: str, transactions_file: str) -> nx.MultiDiGraph:
             # Wei is a smaller denomination of Ether, 1 Ether = 10^18 Wei.
             value = float(value) / (10 ** 18)
 
-            # First check that both the to_ and from_ addresses are present in the **NO LONGER NECESSARY**
-            # graph before trying to add an edge b/w them. - since datasets might not
-            # # be comprehensive or line up w/ each other.
-            # if from_addr in vertex_dict and to_addr in vertex_dict:
-            #     # Add an edge between the two accounts based on the transaction.
-            #     graph.add_edge((from_addr, vertex_dict[from_addr]), (to_addr, vertex_dict[to_addr]), weight=value)
-
             # Add an edge between the two accounts based on the transaction.
             graph.add_edge(from_addr, to_addr, weight=value)
 
@@ -93,24 +87,22 @@ def build_graph(accounts_file: str, transactions_file: str) -> nx.MultiDiGraph:
 
 
 if __name__ == '__main__':
-    # Run PythonTA
-    # import python_ta.contracts
-    # python_ta.contracts.check_all_contracts()
-
     import doctest
-
     doctest.testmod()
 
-    # import python_ta
-    #
-    # python_ta.check_all(config={
-    #     'max-line-length': 100,
-    #     'disable': ['E1136'],
-    #     'extra-imports': ['csv', 'networkx'],
-    #     'allowed-io': ['load_review_graph'],
-    #     'max-nested-blocks': 4
-    # })
+    import python_ta
+    python_ta.check_all(config={
+        'max-line-length': 100,
+        'disable': ['E1136'],
+        'extra-imports': ['csv', 'networkx', 'math'],
+        'allowed-io': ['build_graph'],
+        'max-nested-blocks': 4
+    })
 
+    import python_ta.contracts
+    python_ta.contracts.check_all_contracts()
+
+    # Uncomment if necessary (example):
     # Create the representation of the Ethereum blockchain network based on the
     # subset of data collected.
-    ethereum_graph = build_graph('balances.csv', 'transactions.csv')
+    # ethereum_graph = build_graph('balances.csv', 'transactions.csv')
